@@ -23,7 +23,9 @@ const chatRoomSchema = new mongoose.Schema(
 );
 
 chatRoomSchema.statics.initiateChat = async function (
-	userIds, type, chatInitiator
+  userIds,
+  type,
+  chatInitiator
 ) {
   try {
     const availableRoom = await this.findOne({
@@ -36,7 +38,7 @@ chatRoomSchema.statics.initiateChat = async function (
     if (availableRoom) {
       return {
         isNew: false,
-        message: 'retrieving an old chat room',
+        message: "retrieving an old chatroom",
         chatRoomId: availableRoom._doc._id,
         type: availableRoom._doc.type,
       };
@@ -45,14 +47,23 @@ chatRoomSchema.statics.initiateChat = async function (
     const newRoom = await this.create({ userIds, type, chatInitiator });
     return {
       isNew: true,
-      message: 'creating a new chatroom',
+      message: "creating a new chatroom",
       chatRoomId: newRoom._doc._id,
       type: newRoom._doc.type,
     };
   } catch (error) {
-    console.log('error on start chat method', error);
+    console.log("error on start chat method", error);
     throw error;
   }
-}
+};
+
+chatRoomSchema.statics.getChatRoomByRoomId = async function (roomId) {
+  try {
+    const room = await this.findOne({ _id: roomId });
+    return room;
+  } catch (error) {
+    throw error;
+  }
+};
 
 export default mongoose.model("ChatRoom", chatRoomSchema);
