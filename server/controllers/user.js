@@ -22,6 +22,9 @@ export default {
   },
   onCreateUser: async (req, res) => {
     try {
+      // validation variable returns {success: boolean, message: string, errors: object}
+      // pass req.body to payload
+      // in checks, tell what the requirements are for each type
       const validation = makeValidation((types) => ({
         payload: req.body,
         checks: {
@@ -32,6 +35,10 @@ export default {
       }));
       if (!validation.success) return res.status(400).json(validation);
 
+      // destruct firstName, lastName, type from req.body
+      // pass to UserModel.createUser
+      // if all goes right, return success: true
+      // with new user created along with status 200
       const { firstName, lastName, type } = req.body;
       const user = await UserModel.createUser(firstName, lastName, type);
       return res.status(200).json({ success: true, user });

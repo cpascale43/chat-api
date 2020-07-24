@@ -1,3 +1,5 @@
+// set mongoDB instance
+
 const config = {
     db: {
       url: 'localhost:27017',

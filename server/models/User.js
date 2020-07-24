@@ -1,11 +1,16 @@
 import mongoose from "mongoose";
 import { v4 as uuidv4 } from "uuid";
 
+// 2 types of users programmatically ensures API and DB validation
 export const USER_TYPES = {
   CONSUMER: "consumer",
   SUPPORT: "support",
 };
 
+// create a schema for a single document inside user collection
+  // uuidv4 generates a random string by default
+  // timestamps: true adds a createdAt and updatedAt date value
+  // collection shows what collection name is inside database
 const userSchema = new mongoose.Schema(
   {
     _id: {
@@ -28,6 +33,8 @@ const userSchema = new mongoose.Schema(
   }
 );
 
+// add a static methd to userSchema that takes 3 parameters: firstName, lastName, type
+// `this` keyword ensures we perform operations on the userSchema object
 userSchema.statics.createUser = async function (firstName, lastName, type) {
   try {
     const user = await this.create({ firstName, lastName, type });
