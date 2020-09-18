@@ -33,7 +33,7 @@ const userSchema = new mongoose.Schema(
   }
 );
 
-// add a static methd to userSchema that takes 3 parameters: firstName, lastName, type
+// add a static method to userSchema that takes 3 parameters: firstName, lastName, type
 // `this` keyword ensures we perform operations on the userSchema object
 userSchema.statics.createUser = async function (firstName, lastName, type) {
   try {
